@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.blizzard.com/wow/ui/ 
+                   ..\..\FrameXML\UI.xsd">
+
+<Script file="AutoMail.lua"/> 
+<Frame name="AutoMail"> 
+    <Scripts> 
+        <OnLoad> 
+		AutoMail_OnLoad()
+		self:RegisterEvent("MAIL_SHOW");
+		self:RegisterEvent("MAIL_CLOSED");
+        </OnLoad>
+	<OnEvent> 
+		AutoMail_EventHandler(event); 
+	</OnEvent>
+    </Scripts>
+</Frame>
+</Ui>

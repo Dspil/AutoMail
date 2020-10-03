@@ -1,0 +1,7 @@
+## Interface: 30305
+## Author: Danai Efstathiou
+## Title: AutoMail
+## Notes: Open and loot all mail automatically
+## Version: 1.0
+AutoMail.xml
+AutoMail.lua
