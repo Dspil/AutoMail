@@ -1,31 +1,31 @@
 function AutoMail_OnLoad()
-	b = CreateFrame("Button", "MyButton", UIParent, "UIPanelButtonTemplate")
-	b:SetText("Open All")
-	b:SetScript("OnClick", AutoMail)
-	b:Hide()
+	AutoMail_button = CreateFrame("Button", "MyButton", UIParent, "UIPanelButtonTemplate")
+	AutoMail_button:SetText("Open All")
+	AutoMail_button:SetScript("OnClick", AutoMail)
+	AutoMail_button:Hide()
 	
-	cb = CreateFrame("CheckButton", "MyCheckBox", UIParent, "ChatConfigCheckButtonTemplate");
-	cb:SetScript("OnClick", AutoMail_OnCheck)
-	cb.tooltip = "Don't Delete Letters"
-	cb:Hide()
+	AutoMail_checkbox = CreateFrame("CheckButton", "MyCheckBox", UIParent, "ChatConfigCheckButtonTemplate");
+	AutoMail_checkbox:SetScript("OnClick", AutoMail_OnCheck)
+	AutoMail_checkbox.tooltip = "Don't Delete Letters"
+	AutoMail_checkbox:Hide()
 end
 
 function AutoMail_EventHandler(event)
 	if event == "MAIL_SHOW" then
-		b:SetParent("InboxFrame")
-		b:SetPoint("TOP", "MailFrame", 0, -b:GetParent():GetHeight() / 12)
-		b:SetSize(b:GetParent():GetWidth() / 4 , b:GetParent():GetHeight() / 20)
-		b:Show()
+		AutoMail_button:SetParent("InboxFrame")
+		AutoMail_button:SetPoint("TOP", "InboxFrame", 0, -AutoMail_button:GetParent():GetHeight() / 12)
+		AutoMail_button:SetSize(AutoMail_button:GetParent():GetWidth() / 4 , AutoMail_button:GetParent():GetHeight() / 20)
+		AutoMail_button:Show()
 		
-		cb:SetParent("InboxFrame")
-		cb:SetFrameLevel(cb:GetParent():GetFrameLevel() + 1)
-		cb:SetPoint("TOP", "InboxFrame", cb:GetParent():GetWidth() / 4, -cb:GetParent():GetHeight() / 12)
-		cb:SetSize(cb:GetParent():GetHeight() / 20 , cb:GetParent():GetHeight() / 20)
-		cb:SetHitRectInsets(0,0,0,0)
-		cb:Show()
+		AutoMail_checkbox:SetParent("InboxFrame")
+		AutoMail_checkbox:SetFrameLevel(AutoMail_checkbox:GetParent():GetFrameLevel() + 1)
+		AutoMail_checkbox:SetPoint("TOP", "InboxFrame", AutoMail_checkbox:GetParent():GetWidth() / 4, -AutoMail_checkbox:GetParent():GetHeight() / 12)
+		AutoMail_checkbox:SetSize(AutoMail_checkbox:GetParent():GetHeight() / 20 , AutoMail_checkbox:GetParent():GetHeight() / 20)
+		AutoMail_checkbox:SetHitRectInsets(0,0,0,0)
+		AutoMail_checkbox:Show()
 	else 
-		b:Hide()
-		cb:Hide()
+		AutoMail_button:Hide()
+		AutoMail_checkbox:Hide()
 	end
 
 end
