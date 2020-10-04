@@ -3,6 +3,11 @@ function AutoMail_OnLoad()
 	b:SetText("Open All")
 	b:SetScript("OnClick", AutoMail)
 	b:Hide()
+	
+	cb = CreateFrame("CheckButton", "MyCheckBox", UIParent, "ChatConfigCheckButtonTemplate");
+	cb:SetScript("OnClick", AutoMail_OnCheck)
+	cb.tooltip = "Don't Delete Letters"
+	cb:Hide()
 end
 
 function AutoMail_EventHandler(event)
@@ -11,8 +16,16 @@ function AutoMail_EventHandler(event)
 		b:SetPoint("TOP", "MailFrame", 0, -b:GetParent():GetHeight() / 12)
 		b:SetSize(b:GetParent():GetWidth() / 4 , b:GetParent():GetHeight() / 20)
 		b:Show()
+		
+		cb:SetParent("InboxFrame")
+		cb:SetFrameLevel(cb:GetParent():GetFrameLevel() + 1)
+		cb:SetPoint("TOP", "InboxFrame", cb:GetParent():GetWidth() / 4, -cb:GetParent():GetHeight() / 12)
+		cb:SetSize(cb:GetParent():GetHeight() / 20 , cb:GetParent():GetHeight() / 20)
+		cb:SetHitRectInsets(0,0,0,0)
+		cb:Show()
 	else 
 		b:Hide()
+		cb:Hide()
 	end
 
 end
@@ -24,6 +37,11 @@ index = 1
 mailid = 0
 has_changed = false
 start_shown = 0
+delete_letters = true
+
+function AutoMail_OnCheck()
+	delete_letters = not delete_letters
+end
 
 function OpenAllMail()
 	local shown, total = GetInboxNumItems()
@@ -48,7 +66,7 @@ function OpenAllMail()
 		return 0
 	end
 	if mailid == daysLeft then
-		if hasItem + money == 0 then
+		if hasItem + money == 0 and delete_letters then
 			DeleteInboxItem(index)
 		else
 			index = index + 1
