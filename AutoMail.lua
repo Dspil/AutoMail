@@ -33,47 +33,47 @@ end
 -- open mail logic
 
 automail_control = false
-index = 1
-mailid = 0
-has_changed = false
-start_shown = 0
-delete_letters = true
+automail_index = 1
+automail_mailid = 0
+automail_has_changed = false
+automail_start_shown = 0
+automail_delete_letters = true
 
 function AutoMail_OnCheck()
-	delete_letters = not delete_letters
+	automail_delete_letters = not automail_delete_letters
 end
 
 function OpenAllMail()
 	local shown, total = GetInboxNumItems()
-	if shown < start_shown then
-		has_changed = true
+	if shown < automail_start_shown then
+		automail_has_changed = true
 	end
-	if shown - index + 1 == 0 then
+	if shown - automail_index + 1 == 0 then
 		automail_control = false
 		InboxGetMoreMail()
-		if has_changed then
+		if automail_has_changed then
 			AutoMail_wait(0.2, AutoMail)
 		end
 		return 0
 	end
-	local packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, hasItem, wasRead, wasReturned, textCreated, canReply, isGM = GetInboxHeaderInfo(index);
+	local packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, hasItem, wasRead, wasReturned, textCreated, canReply, isGM = GetInboxHeaderInfo(automail_index);
 	if not hasItem then
 		hasItem = 0
 	end
 	if CODAmount > 0 then
-		index = index + 1
+		automail_index = automail_index + 1
 		AutoMail_wait(0, OpenAllMail)
 		return 0
 	end
-	if mailid == daysLeft then
-		if hasItem + money == 0 and delete_letters then
-			DeleteInboxItem(index)
+	if automail_mailid == daysLeft then
+		if hasItem + money == 0 and automail_delete_letters then
+			DeleteInboxItem(automail_index)
 		else
-			index = index + 1
+			automail_index = automail_index + 1
 		end
 	else
-		mailid = daysLeft
-		AutoLootMailItem(index)
+		automail_mailid = daysLeft
+		AutoLootMailItem(automail_index)
 	end
 	AutoMail_wait(0.05 * (hasItem + 1), OpenAllMail)
 end
@@ -83,9 +83,9 @@ function AutoMail()
 		return 0
 	end
 	local shown, total = GetInboxNumItems()
-	start_shown = shown
+	automail_start_shown = shown
 	automail_control = true
-	index = 1
+	automail_index = 1
 	OpenAllMail()
 end
 
