@@ -32,11 +32,6 @@ end
 
 -- open mail logic
 
-automail_control = false
-automail_index = 1
-automail_mailid = 0
-automail_has_changed = false
-automail_start_shown = 0
 automail_delete_letters = true
 
 function AutoMail_OnCheck()
@@ -85,7 +80,9 @@ function AutoMail()
 	local shown, total = GetInboxNumItems()
 	automail_start_shown = shown
 	automail_control = true
+	automail_has_changed = false
 	automail_index = 1
+	automail_mailid = 0
 	OpenAllMail()
 end
 
