@@ -26,6 +26,8 @@ function AutoMail_EventHandler(event)
 	else 
 		AutoMail_button:Hide()
 		AutoMail_checkbox:Hide()
+		automail_control = false
+		automail_running = false
 	end
 
 end
@@ -39,6 +41,7 @@ function AutoMail_OnCheck()
 end
 
 function OpenAllMail()
+	if not automail_running then return nil end
 	local shown, total = GetInboxNumItems()
 	if shown < automail_start_shown then
 		automail_has_changed = true
@@ -49,6 +52,8 @@ function OpenAllMail()
 		if automail_has_changed then
 			AutoMail_wait(0.2, AutoMail)
 		end
+		automail_running = false
+		automail_control = false
 		return 0
 	end
 	local packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, hasItem, wasRead, wasReturned, textCreated, canReply, isGM = GetInboxHeaderInfo(automail_index);
@@ -77,6 +82,7 @@ function AutoMail()
 	if automail_control then
 		return 0
 	end
+	automail_running = true
 	local shown, total = GetInboxNumItems()
 	automail_start_shown = shown
 	automail_control = true
