@@ -65,14 +65,17 @@ function OpenAllMail()
 		AutoMail_wait(0, OpenAllMail)
 		return 0
 	end
-	if automail_mailid == daysLeft then
-		if hasItem + money == 0 and automail_delete_letters then
+	if hasItem + money == 0 then 
+		if automail_delete_letters then
 			DeleteInboxItem(automail_index)
+			automail_has_changed = true
 		else
 			automail_index = automail_index + 1
+			automail_has_changed = true
 		end
 	else
 		automail_mailid = daysLeft
+		automail_has_changed = true
 		AutoLootMailItem(automail_index)
 	end
 	AutoMail_wait(0.05 * (hasItem + 1), OpenAllMail)
